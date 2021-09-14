@@ -137,7 +137,7 @@ public class StepDefinitions {
     @Then("The new balance of his euro account should now be {double}")
     public void the_new_balance_of_his_euro_account_should_now_be(double newBalance) {
         double actualResult = danny.getAccountBalance();
-        Assert.assertEquals(newBalance, actualResult,0.009);
+        Assert.assertEquals(newBalance, actualResult, 0.009);
         System.out.println("The new balance is: " + actualResult);
     }
 
