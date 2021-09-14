@@ -5,55 +5,65 @@ import java.util.HashMap;
 
 public class Person {
 
-    private String name;
-    static final String EURO_ACCOUNT = "EUR";
-    static final int splitBy = 2;
-
+    private final String name;
     //Accounts currency & balance
     // EUR 30
     // USD 50
-    // STG 30
+    // STG 30 // GBP under ISO 4217
+    private static final String defaultAccountCode = "EUR";
+    private String selectedAccountCode;
     private HashMap<String, Account> userAccounts = new HashMap<String, Account>();
 
-    public Person(String name){
+    public Person(String name) {
         this.name = name;
-        //Create a default euro account and add it the our userAccounts container
-        Currency accCurrency = Currency.getInstance(EURO_ACCOUNT);
-        Account euroAccount = new Account(accCurrency, 0);
-        userAccounts.put(EURO_ACCOUNT, euroAccount);
+        this.setSelectedAccountCode(defaultAccountCode);
+
+        // Create a default account and Add to userAccounts
+        this.addAccount(selectedAccountCode);
     }
 
-    public void setAccountBalance(double startingBalance) {
-        userAccounts.get(EURO_ACCOUNT).setBalance(startingBalance);
+    public String getName() {
+        return this.name;
     }
 
-    public double getAccountBalance(String eur) {
-        return userAccounts.get(EURO_ACCOUNT).getBalance();
+    public void setSelectedAccountCode(String aCurrencyCode) {
+        this.selectedAccountCode = aCurrencyCode;
     }
 
-    public Account getAccount(String account) {
-        return userAccounts.get(account);
+    public Account addAccount(String aCurrencyCode) {
+        Account tmpAccount = new Account(aCurrencyCode, 0);
+        this.userAccounts.put(aCurrencyCode, tmpAccount);
+        return tmpAccount;
     }
 
-    public void send(Person person, Double sendMoney) {
+    public Account getAccount(String aAccount) {
+        Account account = userAccounts.get(aAccount);
+        if (account == null) {
+            System.out.println("Account not found: " + aAccount + "");
 
-        if(this.getAccount(EURO_ACCOUNT).getBalance() >= sendMoney){
-
-            person.getAccount(EURO_ACCOUNT).receiveTransfer(sendMoney);
-            this.getAccount(EURO_ACCOUNT).setBalance(this.getAccount(EURO_ACCOUNT).getBalance() - sendMoney );
-
+            throw new RuntimeException("Account not found: " + aAccount);
         }
+        return account;
     }
 
-    public void splitingBill(Person person, Double bill) {
-        //Divide between two
-        bill = bill / 2.0;
 
-        if((this.getAccount(EURO_ACCOUNT).getBalance() > bill && person.getAccount(EURO_ACCOUNT).getBalance() > bill) ) {
-
-            this.setAccountBalance(this.getAccount(EURO_ACCOUNT).getBalance() - bill);
-            person.setAccountBalance(person.getAccount(EURO_ACCOUNT).getBalance() - bill);
-        }
-
+    public Account getAccount() {
+        return this.getAccount(selectedAccountCode);
     }
+
+    public double getAccountBalance() {
+        Account tmpAccount = this.getAccount(selectedAccountCode);
+        return tmpAccount.getBalance();
+    }
+
+    public void setAccountBalance(double aStartingBalance) {
+        this.setAccountBalance(selectedAccountCode, aStartingBalance);
+    }
+
+    public void setAccountBalance(String aAccount, double aStartingBalance) {
+        Account tmpAccount = this.getAccount(aAccount);
+        tmpAccount.setBalance(aStartingBalance);
+    }
+
+
 }
