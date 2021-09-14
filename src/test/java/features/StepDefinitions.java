@@ -27,7 +27,7 @@ public class StepDefinitions {
         System.out.println("New Person: " + this.danny.getName());
         System.out.printf("New Top Up Account balance: %s%s%n",
                 this.topUpAccount.getAccountCurrency().getSymbol(),
-                this.topUpAccount.getBalance());
+                this.topUpAccount.getAccountBalance());
     }
 
     @Given("Danny has {double} euro in his euro Revolut account")
@@ -37,7 +37,7 @@ public class StepDefinitions {
         System.out.printf("Danny's %s Revolut account balance: %s%s%n",
                 danny.getAccount().getAccountCurrency().getDisplayName(),
                 danny.getAccount().getAccountCurrency().getSymbol(),
-                danny.getAccount().getBalance());
+                danny.getAccount().getAccountBalance());
     }
 
     @Given("Danny selects {double} euro as the topUp amount")
@@ -102,7 +102,7 @@ public class StepDefinitions {
         System.out.printf("Danny's %s Revolut Account balance: %s%s%n",
                 danny.getAccount().getAccountCurrency().getDisplayName(),
                 danny.getAccount().getAccountCurrency().getSymbol(),
-                danny.getAccount().getBalance());
+                danny.getAccount().getAccountBalance());
     }
 
     @When("Danny now tops up by {double}")
@@ -155,12 +155,12 @@ public class StepDefinitions {
 
         Account tmpAccount = danny.getAccount(aAccount);
 
-        System.out.println("Account: " + aAccount + ", balance: " + tmpAccount.getBalance() +
+        System.out.println("Account: " + aAccount + ", balance: " + tmpAccount.getAccountBalance() +
                 ", exp: " + aBalance);
 
         Assert.assertEquals(
                 aBalance,
-                tmpAccount.getBalance(),
+                tmpAccount.getAccountBalance(),
                 0.009); // To the final tenth of a percent
 
     }

@@ -5,38 +5,38 @@ import java.util.Currency;
 public class Account {
     private Currency accountCurrency;
     private PaymentService paymentService;
-    private double balance;
+    private double accountBalance;
 
     public Account(String accountCurrency, double balance){
-        this.balance = balance;
+        this.accountBalance = balance;
 
         this.accountCurrency = Currency.getInstance(accountCurrency);
 
         this.paymentService = new PaymentService("DebitCards");
     }
 
-    public void setBalance(double newBalance) {
+    public void setAccountBalance(double newBalance) {
         // Set an opening balance
-        this.balance = newBalance;
+        this.accountBalance = newBalance;
     }
 
-    public double getBalance() {
-        return this.balance;
+    public double getAccountBalance() {
+        return this.accountBalance;
     }
 
     public boolean verifyPaymentTransaction(double aPayment) {
         // Verify the account has enough
-        return (this.balance >= aPayment);
+        return (this.accountBalance >= aPayment);
     }
 
     public void makePayment(double aPayment) {
         if (this.verifyPaymentTransaction(aPayment)) {
-            this.balance -= aPayment;
+            this.accountBalance -= aPayment;
         }
     }
 
     public double takePayment(double aPayment) {
-        this.balance += aPayment;
+        this.accountBalance += aPayment;
         return aPayment;
     }
 

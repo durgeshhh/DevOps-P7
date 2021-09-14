@@ -1,6 +1,5 @@
 package revolut;
 
-import java.util.Currency;
 import java.util.HashMap;
 
 public class Person {
@@ -53,7 +52,7 @@ public class Person {
 
     public double getAccountBalance() {
         Account tmpAccount = this.getAccount(selectedAccountCode);
-        return tmpAccount.getBalance();
+        return tmpAccount.getAccountBalance();
     }
 
     public void setAccountBalance(double aStartingBalance) {
@@ -62,7 +61,7 @@ public class Person {
 
     public void setAccountBalance(String aAccount, double aStartingBalance) {
         Account tmpAccount = this.getAccount(aAccount);
-        tmpAccount.setBalance(aStartingBalance);
+        tmpAccount.setAccountBalance(aStartingBalance);
     }
 
 
