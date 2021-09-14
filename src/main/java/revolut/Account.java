@@ -19,7 +19,18 @@ public class Account {
         return this.balance;
     }
 
-    public void addFunds(double topUpAmount) {
+    public boolean addFunds(double topUpAmount, PaymentService topUpMethod) {
+
+        if(topUpMethod.getBalance() >= topUpAmount){
+
+            this.balance += topUpAmount;
+            return true;
+        }
+
+        return false;
+    }
+
+    public void receiveTransfer(Double topUpAmount) {
         this.balance += topUpAmount;
     }
 }
